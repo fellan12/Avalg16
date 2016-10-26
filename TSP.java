@@ -32,6 +32,8 @@ public class TSP {
 		for (int i = 0; i < 100; i++) {
 			twoOpt(true);
 		}
+
+		printResult();
 	}
 
 	public static void greedy2() {

@@ -24,13 +24,14 @@ public class TSP {
 		getInput(); // läs in data och lagra allt i rätt datatyper
 		greedy2(); // kör greedy (kruskalvariant)
 
-		// kör 2opt med bestgame (innebär att man letar efter bästa swapen av alla städer och bara swapar på ett ställa)
-		for (int i = 0; i < 10; i++) {
-			twoOpt(false);
-		}
 		// kör 2opt med greedy (letar efter bästa swapen i varje stad och swapar sedan för varje stad)
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			twoOpt(true);
+		}
+		// kör 2opt med bestgain (innebär att man letar efter bästa swapen av alla städer och bara swapar på ett ställa)
+		
+		for (int i = 0; i < 100; i++) {
+			twoOpt(false);
 		}
 
 		printResult();

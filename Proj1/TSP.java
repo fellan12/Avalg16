@@ -25,12 +25,12 @@ public class TSP {
 		greedy2(); // kör greedy (kruskalvariant)
 
 		// kör 2opt med greedy (letar efter bästa swapen i varje stad och swapar sedan för varje stad)
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 0; i++) {
 			twoOpt(true);
 		}
-		// kör 2opt med bestgain (innebär att man letar efter bästa swapen av alla städer och bara swapar på ett ställa)
 		
-		for (int i = 0; i < 100; i++) {
+		// kör 2opt med bestgain (innebär att man letar efter bästa swapen av alla städer och bara swapar på ett ställa)
+		for (int i = 0; i < 250; i++) {
 			twoOpt(false);
 		}
 

@@ -26,7 +26,7 @@ public class City {
 	}
 
 	public void add_neighbors(int neighbor) {
-		if (neighbors.size() < 100) {
+		if (neighbors.size() < 110) {
 			neighbors.add(neighbor);
 		}
 	}

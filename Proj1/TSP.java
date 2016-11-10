@@ -1,54 +1,50 @@
 import java.lang.*;
 import java.util.*;
 
+/*
+This is the main file.
+When submitting this project to Kattis:
+- TSP.java, City.java, Edge.java and Kattio.java needs to be inserted
+- Use TSP as the main class.
+*/
+
 public class TSP {
 
 	private static Kattio io = new Kattio(System.in, System.out);
-	private static int numOfPoints;
-	private static double points[][];
-	private static int tour[];
-	private static boolean used[];
-	private static ArrayList<Edge> edges; // listar alla kantobjekt, sorterat m.a.p. kortaste kanten
-	private static int distance[][]; // sparar varje nods avstånd till alla andra
-	private static City cities[];
-	private static final boolean DEBUG = false;
-	private static final boolean PRINTSCORE = false;
-
-	public static void debug(String str) {
-		if (DEBUG) {
-			System.out.println(str);
-		}
-	}
+	private static int numOfCities;
+	private static ArrayList<Edge> edges; // list all edges in the complete graph, sorted in increasing order of weight
+	private static int distance[][]; // stores the euclidian distance between two cities.
+	private static City cities[]; // Array of all the cities
 
 	public static void main (String[] args) {
-		getInput(); // läs in data och lagra allt i rätt datatyper
-		greedy2(); // kör greedy (kruskalvariant)
+		// Read input and store it in different data structures
+		getInput();
 
-		// kör 2opt med greedy (letar efter bästa swapen i varje stad och swapar sedan för varje stad)
-		for (int i = 0; i < 0; i++) {
-			twoOpt(true);
-		}
-		
-		// kör 2opt med bestgain (innebär att man letar efter bästa swapen av alla städer och bara swapar på ett ställa)
-		for (int i = 0; i < 250; i++) {
+		// Run shortest edge heurestic
+		shortest_edge();
+
+		// Run 2opt with bestgain
+		for (int i = 0; i < 200; i++) {
 			twoOpt(false);
 		}
 
+		// Print the final path
 		printResult();
 	}
 
-	public static void greedy2() {
-		int connected = 0; // antal städer som är tillagda i slutpathen
+	public static void shortest_edge() {
+		int connected = 0; // number of cities in path
 
 		for (Edge edge : edges) {
 			// Check that degree of both cities won't become 3.
 			if (edge.city1.degree+1 > 2 || edge.city2.degree+1 > 2) {
 				continue;
 			}
-			// Check that edge does not build a cycle (except for last edge).
-			else if (cycleCheck(edge.city1, edge.city1, edge.city2) && connected+1 != numOfPoints) {
+			// Check that the edge between city1 and city2 does not build a cycle (except for last edge).
+			else if (cycleCheck(edge.city1, edge.city1, edge.city2) && connected+1 != numOfCities) {
 				continue;
 			}
+			// Add the edge to the path
 			else {
 				connected++;
 				edge.city1.degree++;
@@ -65,14 +61,15 @@ public class TSP {
 				else {
 					edge.city2.next = edge.city1;
 				}
-			
-				if (connected == numOfPoints) {
+				// When all cities are covered we don't need to look at anymore edges.
+				if (connected == numOfCities) {
 					break;
 				}
 			}
 		}
 
-		// städa rutt, rätta till next och prev så att alla next-pekare går åt samma håll i cykeln och vice versa
+		// Fix so that all the next references goes in the same direction in the path
+		// (and opposite direction for the prev reference)
 		City start = cities[0];
 		City c1 = cities[0];
 		City c2;
@@ -88,16 +85,20 @@ public class TSP {
 	}
 
 	public static boolean cycleCheck(City latestCity, City city1, City city2) {
-		// Basfall 1: Om ena staden inte har någon kant på sig kan en cykel omöjligt bildas
+		//Checks if connecting city1 with city2 will lead to a cycle.
+
+		// Basecase 1: If one of the cities is not connected to an edge in the path we know for sure that
+		// a cycle can't be created.
 		if ((city1.next == null && city1.prev == null) || (city2.next == null && city2.prev == null)) {
 			return false;
 		}
-		// Basfall 2: Om city1 sitter ihop med city 2 --> cykel har bildats
+		// Basecase 2: If you can walk from city1 to city2, then a cycle has been created.
 		else if (city1.equals(city2)) {
 			return true;
 		}
 		else {
-		// Gå igenom alla kanter från city1 tills det tar stopp
+		// Walk through all cities from city1 until you reach an end.
+		// If that end is not city2, then it is not a cycle.
 			if (city1.next != null && !city1.next.equals(latestCity)) {
 				return (cycleCheck(city1, city1.next, city2));
 			}
@@ -109,13 +110,17 @@ public class TSP {
 		
 	}
 	public static void twoOpt(boolean greedy) {
-		// Om greedy är satt till true, letar den efter bästa swap i varje stad
-		// Om greedy är satt till false, letar den efter bästa swap på hela rutten.
+		// If greedy is true, then it will run the greedy version of 2-opt.
+		// Otherwise the bestgain version of 2-opt will be run.
+
+		//2-opt is not possible unless there are at least 4 cities
+		// (2 edges need to be able to swap)
 		if (cities.length < 4) {
-			return; //2-opt kan inte köras om det är mindre än 4 städer (krävs minst två kanter för att kunna swapa)
+			return;			
 		}
-		int c1, c2, c3, c4; // c1-c2 och c3-c4 swapas till c1-c3 och c2-c4 (om det ger bättre resultat)
-		int currc1 = -1, currc2 = -1, currc3 = -1, currc4 = -1; // Används för att hålla koll på nuvarande bästa städer att swapa
+
+		int c1, c2, c3, c4; // c1-c2 and c3-c4 swaps to c1-c3 and c2-c4 (if it shortens the distance)
+		int currc1 = -1, currc2 = -1, currc3 = -1, currc4 = -1; // Used to keep track of the best swaping cities in best gain
 		int bestGain = 0;
 		for(int i = 0; i < cities.length; i++) {
 			c1 = i;
@@ -157,7 +162,9 @@ public class TSP {
 	}
 
 	public static void twoOptSwap(int c1, int c2, int c3, int c4) {
-		// Utför själva swapen
+		// Performs a swap between cities c1, c2, c3 and c4
+		// Previous edges: c1-c2 and c3-c4
+		// New edges: c1-c3 and c2-c4
 		cities[c3].next = cities[c3].prev;
 		cities[c1].next = cities[c3];
 		cities[c3].prev = cities[c1];
@@ -166,7 +173,8 @@ public class TSP {
 		cities[c2].next = cities[c4];
 		cities[c4].prev = cities[c2];
 
-		// städa upp prev och next efter man swappat eftersom halva cykeln byter håll.
+		// switch the next and prev references after the swap so that next goes 
+		// in one direction in the path (opposite direction for prev)
 	
 		int a = c2;
 		int b = c2;
@@ -177,13 +185,16 @@ public class TSP {
 		}
 	}
 
-	public static void getInput() { // läser in allt och lagrar de i alla format vi vill ha
-		numOfPoints = io.getInt();
-		edges = new ArrayList<Edge>();
-		distance = new int[numOfPoints][numOfPoints];
-		cities = new City[numOfPoints];
+	public static void getInput() { 
+		// Reads the coordinates and saves them using three different structure
+		// All these structure are later used in different context in order
+		// to get as fast lookup as possible
+		numOfCities = io.getInt();
+		edges = new ArrayList<Edge>(); // used in the shortest edge heuristic
+		distance = new int[numOfCities][numOfCities]; // used to get O(1) lookup for distance between 2 cities
+		cities = new City[numOfCities]; //Stores all the cityobjects with relevant information about each city
 
-		for (int i = 0; i < numOfPoints; i++) {
+		for (int i = 0; i < numOfCities; i++) {
 			cities[i] = new City(io.getDouble(),io.getDouble(), i);
 			for (int j = 0; j < i; j++) {
 				distance[i][j] = dist(cities[i], cities[j]);
@@ -192,9 +203,9 @@ public class TSP {
 			}
 		}
 
-		Collections.sort(edges); // sorted edge list to be used in the greedy algorithm
+		Collections.sort(edges); // sorted edge list to be used in the shortest edge heuristic
 
-		// add neighbors to city object;
+		// add neighbors to city object (used in 2opt to find closest neighbour of a city)
 		for (Edge edge : edges) {
 			edge.city1.add_neighbors(edge.city2.ptNumber);
 			edge.city2.add_neighbors(edge.city1.ptNumber);
@@ -202,7 +213,8 @@ public class TSP {
 
 	}
 
-	public static void printResult() { // Skriver ut alla städer i rätt ordning enligt rutten
+	public static void printResult() { 
+		// Prints the cities in the order of the path with help from next and prev references
 		City city = cities[0];
 		City latestCity = cities[0];
 		for (int i = 0; i < cities.length; i++) {
@@ -219,7 +231,8 @@ public class TSP {
 		}
 	}
 
-	public static int dist(City city1, City city2) { // Beräknar avståndet mellan 2 städer
+	public static int dist(City city1, City city2) { 
+		// Calculate and return the euclidian distance between city 1 and city 2
 		double x1 = city1.getX();
 		double y1 = city1.getY();
 		double x2 = city2.getX();

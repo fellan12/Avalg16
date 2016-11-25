@@ -5,6 +5,7 @@ Har fasta värden i rho-funktionen:
 	c = 1
 
 Denna version ger ett ungefärligt värdet av 57 på kattis
+https://kth.kattis.com/submissions/1542584
 
 
 Phollandrho_Random1
@@ -14,6 +15,7 @@ Har fast värde på x1 och x2, men random värde på c i rho-funktionen:
 	c = random
 
 Denna version ger ett ungefärligt värde av 51 på kattis
+https://kth.kattis.com/submissions/1542589
 
 
 Phollandrho_Random2
@@ -23,6 +25,7 @@ Har fast värde på c, men random på x1 och x2 i rho-funktionen
 	c = 1
 
 Denna version ger ett ungefärligt värde av 5 på kattis
+https://kth.kattis.com/submissions/1542591
 
 
 Som det ser ut så verkar fixed-versionen fungera bäst. Det kommer nog också att ha en relativ fast tid

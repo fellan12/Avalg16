@@ -20,15 +20,14 @@ class Phollandrho_fixed{
         BigInteger x1 = TWO;
         BigInteger x2 = TWO;
         BigInteger divisor= ONE;
-        BigInteger c  = ONE;                                // In the original algorithm, g(x)=(x^2 - 1) mod(n)
+        BigInteger c  = ONE;                               
         
-        /*                                                     // Nowadays it's more common to use g(x)=(x^2 + 1) mod(n)        
         for (BigInteger num : smallerPrimes) {
             if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
             return num;
             }
         }
-        */
+        
        
 
         while((divisor.equals(ONE))){
@@ -86,7 +85,6 @@ class Phollandrho_fixed{
             try{
                 BigInteger N = scan.nextBigInteger();
                 factor(N, deadline);
-               // control();
                 if(!cant_prime){
                     for(BigInteger i : primes){
                         System.out.println(i);

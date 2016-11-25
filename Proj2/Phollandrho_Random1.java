@@ -79,7 +79,6 @@ class Phollandrho_Random1{
             try{
                 BigInteger N = scan.nextBigInteger();
                 factor(N, deadline);
-               // control();
                 if(!cant_prime){
                     for(BigInteger i : primes){
                         System.out.println(i);

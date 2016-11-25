@@ -17,7 +17,7 @@ class Trial_dividion{
         return;
       }
 
-      //2 to n
+      //2 to sqrt(n)
       for(BigInteger divisor = TWO; a.compareTo(ONE) > 0; divisor = divisor.add(ONE)){
         if(deadline.timeUntil() > 1.28*Math.pow(10,9)){    //1.28 sec remaining
           while(a.mod(divisor).equals(ZERO)){

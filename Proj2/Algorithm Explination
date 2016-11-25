@@ -28,6 +28,11 @@ Denna version ger ett ungefärligt värde av 5 på kattis
 https://kth.kattis.com/submissions/1542591
 
 
+Trial Division
+Denna version ger ett ungefärligt värde av 1 på kattis
+https://kth.kattis.com/submissions/1542603
+
+
 Som det ser ut så verkar fixed-versionen fungera bäst. Det kommer nog också att ha en relativ fast tid
 att köra. Det kan nog vara för att man inte har någon randomness.
 

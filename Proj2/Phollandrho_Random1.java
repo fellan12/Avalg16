@@ -21,14 +21,12 @@ class Phollandrho_Random1{
         BigInteger x2 = TWO;
         BigInteger divisor= ONE;
         BigInteger c  = new BigInteger(N.bitLength(),random);           
-         
-        /*                                                                
+     
         for (BigInteger num : smallerPrimes) {
             if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
             return num;
             }
         }
-        */
 
         while((divisor.equals(ONE))){
             if(deadline.timeUntil() > 1.28*Math.pow(10,9)){    //1.28 sec remaining

@@ -26,14 +26,13 @@ class Phollandrho_Random2{
         BigInteger divisor= ONE;
         BigInteger c  = ONE;                                // In the original algorithm, g(x)=(x^2 - 1) mod(n)
                                                             // Nowadays it's more common to use g(x)=(x^2 + 1) mod(n)
-        /*
+        
         for (BigInteger num : smallerPrimes) {
             if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
             return num;
             }
         }
-        */
-
+        
         while((divisor.equals(ONE))){
             if(deadline.timeUntil() > 1.28*Math.pow(10,9)){    //1.28 sec remaining
                 x1  = f(x1,N,c);
@@ -45,7 +44,7 @@ class Phollandrho_Random2{
             }
                 
         }
-        
+
         if(!divisor.isProbablePrime(1)){
             return null;
         }

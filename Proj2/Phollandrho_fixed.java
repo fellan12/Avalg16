@@ -22,15 +22,12 @@ class Phollandrho_fixed{
         BigInteger divisor= ONE;
         BigInteger c  = ONE;                               
         
-        /*
         for (BigInteger num : smallerPrimes) {
             if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
             return num;
             }
         }
-        */
-       
-
+        
         while((divisor.equals(ONE))){
             if(deadline.timeUntil() > 1.28*Math.pow(10,9)){    //1.28 sec remaining
                 x1  = f(x1,N,c);

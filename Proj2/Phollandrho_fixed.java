@@ -4,12 +4,14 @@ import java.util.*;
 import java.io.*;
 
 class Phollandrho_fixed{
-    static BigInteger SEVEN = new BigInteger("7");
-    static BigInteger FIVE = new BigInteger("5");
-	static BigInteger THREE = new BigInteger("3");
-    static BigInteger TWO = new BigInteger("2");
+    static BigInteger TWO = new BigInteger("2");    
     static BigInteger ONE = BigInteger.ONE;
     static BigInteger ZERO = BigInteger.ZERO;
+    static BigInteger[] smallerPrimes = new BigInteger[]{
+        TWO,
+        new BigInteger("3"),
+        new BigInteger("5"),
+        new BigInteger("7")};
     static Random random = new Random();
     static ArrayList<BigInteger> primes = new ArrayList<BigInteger>(); 
     static boolean cant_prime = false;
@@ -19,23 +21,15 @@ class Phollandrho_fixed{
         BigInteger x2 = TWO;
         BigInteger divisor= ONE;
         BigInteger c  = ONE;                                // In the original algorithm, g(x)=(x^2 - 1) mod(n)
-                                                            // Nowadays it's more common to use g(x)=(x^2 + 1) mod(n)        
-
-        if (N.mod(TWO).equals(ZERO)){                       //Get out the smaller primes
-            return TWO;
+        
+        /*                                                     // Nowadays it's more common to use g(x)=(x^2 + 1) mod(n)        
+        for (BigInteger num : smallerPrimes) {
+            if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
+            return num;
+            }
         }
-
-        if(N.mod(THREE).equals(ZERO)){                      //Get out the smaller primes
-            return THREE;
-        }
-
-        if(N.mod(FIVE).equals(ZERO)){                       //Get out the smaller primes
-            return FIVE;
-        }
-
-        if(N.mod(SEVEN).equals(ZERO)) {
-            return SEVEN;
-        }
+        */
+       
 
         while((divisor.equals(ONE))){
             if(deadline.timeUntil() > 1.28*Math.pow(10,9)){    //1.28 sec remaining
@@ -43,18 +37,20 @@ class Phollandrho_fixed{
                 x2 = f(f(x2,N,c),N,c);
                 divisor = x1.subtract(x2).gcd(N);
             }else{
-                cant_prime = true;
                 return null;
             }
                 
+        }
+
+        if(!divisor.isProbablePrime(1)){
+            return null;
         }
         return divisor;
     }
     
 
     private static BigInteger f(BigInteger X, BigInteger N, BigInteger C){
-        BigInteger x = X.multiply(X).mod(N);
-        x = x.add(C).mod(N);
+        BigInteger x = X.multiply(X).add(C).mod(N);
         return x;
     }
 
@@ -71,6 +67,7 @@ class Phollandrho_fixed{
         BigInteger divisor = rho(N, deadline);
         if(divisor == null){
             System.out.println("fail");
+            cant_prime = true;
             return;
         }else if(divisor.equals(BigInteger.ONE)){
             return;

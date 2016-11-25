@@ -2,27 +2,13 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 
 /**
- * Represents a deadline for the player to make their move.
+ * A deadline for keep track of time.
  */
 public class Deadline {
   public long deadline;
-
-  /** 
-   * Gets CPU time in nanoseconds (but likely with millisecond or microsecond
-   * precision).
-   */
-  public static long getCpuTime() {
-    ThreadMXBean bean = ManagementFactory.getThreadMXBean();
-    return bean.isCurrentThreadCpuTimeSupported() ?
-        bean.getCurrentThreadCpuTime() : 0;
-  }
-
-
   
   /**
-   * Constructs and sets the Deadline.
-   * 
-   * @param deadline the deadline expressed in nanoseconds.
+   * Constructs and sets the Deadline. 
    */
   public Deadline(long deadline) {
     this.deadline = deadline;
@@ -30,9 +16,11 @@ public class Deadline {
 
   /**
    * Calculates and returns the remaining time until the Deadline must be met,
-   * in nanoseconds.
+   * in ns.
    */
   long timeUntil() {
-    return deadline - Deadline.getCpuTime();
+    ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+    long cpuTime = bean.isCurrentThreadCpuTimeSupported() ? bean.getCurrentThreadCpuTime() : 0;
+    return deadline - cpuTime;
   }
 }

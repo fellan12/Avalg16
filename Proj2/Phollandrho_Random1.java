@@ -4,12 +4,14 @@ import java.util.*;
 import java.io.*;
 
 class Phollandrho_Random1{
-    static BigInteger SEVEN = new BigInteger("7");
-    static BigInteger FIVE = new BigInteger("5");
-	static BigInteger THREE = new BigInteger("3");
-    static BigInteger TWO = new BigInteger("2");
+    static BigInteger TWO = new BigInteger("2");    
     static BigInteger ONE = BigInteger.ONE;
     static BigInteger ZERO = BigInteger.ZERO;
+    static BigInteger[] smallerPrimes = new BigInteger[]{
+        TWO,
+        new BigInteger("3"),
+        new BigInteger("5"),
+        new BigInteger("7")};
     static Random random = new Random();
     static ArrayList<BigInteger> primes = new ArrayList<BigInteger>(); 
     static boolean cant_prime = false;
@@ -20,20 +22,10 @@ class Phollandrho_Random1{
         BigInteger divisor= ONE;
         BigInteger c  = new BigInteger(N.bitLength(),random);           
                                                                         
-        if (N.mod(TWO).equals(ZERO)){                       //Get out the smaller primes
-            return TWO;
-        }
-
-        if(N.mod(THREE).equals(ZERO)){                      //Get out the smaller primes
-            return THREE;
-        }
-
-        if(N.mod(FIVE).equals(ZERO)){                       //Get out the smaller primes
-            return FIVE;
-        }
-
-        if(N.mod(SEVEN).equals(ZERO)) {
-            return SEVEN;
+        for (BigInteger num : smallerPrimes) {
+            if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
+            return num;
+            }
         }
 
         while((divisor.equals(ONE))){
@@ -52,8 +44,7 @@ class Phollandrho_Random1{
     
 
     private static BigInteger f(BigInteger X, BigInteger N, BigInteger C){
-        BigInteger x = X.multiply(X).mod(N);
-        x = x.add(C).mod(N);
+        BigInteger x = X.multiply(X).add(C).mod(N);
         return x;
     }
 

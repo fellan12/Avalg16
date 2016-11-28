@@ -13,6 +13,7 @@ class Phollardrho_fixed{
 
     private static ArrayList<BigInteger> primes = new ArrayList<BigInteger>(); 
     private static boolean cant_prime = false;
+    private static BigInteger origin = BigInteger.ONE;
     
     private static BigInteger rho(BigInteger N, Deadline deadline) {
         BigInteger x1 = TWO;
@@ -20,11 +21,11 @@ class Phollardrho_fixed{
         BigInteger divisor= ONE;
         BigInteger c  = ONE;                               
         
-        // for (BigInteger num : smallerPrimes) {
-        //     if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
-        //     return num;
-        //     }
-        // }
+        for (BigInteger num : smallerPrimes) {
+            if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
+               return num;
+           }
+        }
       
 
         while((divisor.equals(ONE))){
@@ -38,6 +39,7 @@ class Phollardrho_fixed{
         }
 
         if(!divisor.isProbablePrime(1)){
+            System.err.println("Fail in rho" + divisor);
             return null;
         }
         return divisor;
@@ -72,6 +74,17 @@ class Phollardrho_fixed{
         }
     }
 
+    public static void controll(){
+        BigInteger sum = BigInteger.ONE;
+        for(BigInteger i : primes){
+            sum = sum.add(i);
+        }   
+        if(sum.equals(origin)){
+            System.out.println("Right!!!!!!!!!!!!!!!!!!");
+        }
+    }
+
+
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
 
@@ -80,6 +93,7 @@ class Phollardrho_fixed{
             Deadline deadline = new Deadline(15000000000L);     //15sec deadline
             try{
                 BigInteger N = scan.nextBigInteger();
+                origin = N;
                 factor(N, deadline);
                 if(!cant_prime){
                     for(BigInteger i : primes){

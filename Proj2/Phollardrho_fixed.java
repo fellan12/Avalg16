@@ -3,16 +3,18 @@ import java.math.*;
 import java.util.*;
 import java.io.*;
 
-class Phollandrho_fixed{
-    private static BigInteger TWO = new BigInteger("2");    
-    private static BigInteger ONE = BigInteger.ONE;
-    private static BigInteger ZERO = BigInteger.ZERO;
-    private static BigInteger[] smallerPrimes = new BigInteger[]{
-      TWO, new BigInteger("3"), new BigInteger("5"), new BigInteger("7")
-    };
-
-    private static ArrayList<BigInteger> primes = new ArrayList<BigInteger>(); 
-    private static boolean cant_prime = false;
+class Phollardrho_fixed{
+    static BigInteger TWO = new BigInteger("2");    
+    static BigInteger ONE = BigInteger.ONE;
+    static BigInteger ZERO = BigInteger.ZERO;
+    static BigInteger[] smallerPrimes = new BigInteger[]{
+        TWO,
+        new BigInteger("3"),
+        new BigInteger("5"),
+        new BigInteger("7")};
+    static Random random = new Random();
+    static ArrayList<BigInteger> primes = new ArrayList<BigInteger>(); 
+    static boolean cant_prime = false;
     
     private static BigInteger rho(BigInteger N, Deadline deadline) {
         BigInteger x1 = TWO;

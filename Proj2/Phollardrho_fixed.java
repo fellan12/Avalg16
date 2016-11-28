@@ -29,6 +29,10 @@ class Phollardrho_fixed{
             }
         }*/
         
+        
+      
+
+
         while((divisor.equals(ONE))){
             if(deadline.timeUntil() > 1.28*Math.pow(10,9)){    //1.28 sec remaining
                 x1  = f(x1,N,c);
@@ -36,8 +40,7 @@ class Phollardrho_fixed{
                 divisor = x1.subtract(x2).gcd(N);
             }else{
                 return null;
-            }
-                
+            }       
         }
 
         if(!divisor.isProbablePrime(1)){
@@ -52,7 +55,7 @@ class Phollardrho_fixed{
         return x;
     }
 
-    private static void factor(BigInteger N, Deadline deadline){	
+    private static void factor(BigInteger N, Deadline deadline){    
         if (N.equals(BigInteger.ONE)){
             return;
         }
@@ -60,7 +63,7 @@ class Phollardrho_fixed{
         if (N.isProbablePrime(1))      //1 - 1/2^certainty that N is a prime
         {
             primes.add(N);
-        	return; 
+            return; 
         }
         BigInteger divisor = rho(N, deadline);
         if(divisor == null){

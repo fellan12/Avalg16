@@ -4,17 +4,15 @@ import java.util.*;
 import java.io.*;
 
 class Phollandrho_fixed{
-    static BigInteger TWO = new BigInteger("2");    
-    static BigInteger ONE = BigInteger.ONE;
-    static BigInteger ZERO = BigInteger.ZERO;
-    static BigInteger[] smallerPrimes = new BigInteger[]{
-        TWO,
-        new BigInteger("3"),
-        new BigInteger("5"),
-        new BigInteger("7")};
-    static Random random = new Random();
-    static ArrayList<BigInteger> primes = new ArrayList<BigInteger>(); 
-    static boolean cant_prime = false;
+    private static BigInteger TWO = new BigInteger("2");    
+    private static BigInteger ONE = BigInteger.ONE;
+    private static BigInteger ZERO = BigInteger.ZERO;
+    private static BigInteger[] smallerPrimes = new BigInteger[]{
+      TWO, new BigInteger("3"), new BigInteger("5"), new BigInteger("7")
+    };
+
+    private static ArrayList<BigInteger> primes = new ArrayList<BigInteger>(); 
+    private static boolean cant_prime = false;
     
     private static BigInteger rho(BigInteger N, Deadline deadline) {
         BigInteger x1 = TWO;
@@ -27,7 +25,8 @@ class Phollandrho_fixed{
             return num;
             }
         }
-        
+      
+
         while((divisor.equals(ONE))){
             if(deadline.timeUntil() > 1.28*Math.pow(10,9)){    //1.28 sec remaining
                 x1  = f(x1,N,c);
@@ -35,8 +34,7 @@ class Phollandrho_fixed{
                 divisor = x1.subtract(x2).gcd(N);
             }else{
                 return null;
-            }
-                
+            }       
         }
 
         if(!divisor.isProbablePrime(1)){
@@ -51,7 +49,7 @@ class Phollandrho_fixed{
         return x;
     }
 
-    private static void factor(BigInteger N, Deadline deadline){	
+    private static void factor(BigInteger N, Deadline deadline){    
         if (N.equals(BigInteger.ONE)){
             return;
         }
@@ -59,7 +57,7 @@ class Phollandrho_fixed{
         if (N.isProbablePrime(1))      //1 - 1/2^certainty that N is a prime
         {
             primes.add(N);
-        	return; 
+            return; 
         }
         BigInteger divisor = rho(N, deadline);
         if(divisor == null){

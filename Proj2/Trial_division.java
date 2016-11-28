@@ -3,7 +3,7 @@ import java.math.*;
 import java.util.*;
 import java.io.*;
 
-class Trial_dividion{
+class Trial_division{
     static BigInteger TWO = new BigInteger("2");
     static BigInteger ONE = BigInteger.ONE;
     static BigInteger ZERO = BigInteger.ZERO;

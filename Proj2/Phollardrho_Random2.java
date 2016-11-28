@@ -3,7 +3,7 @@ import java.math.*;
 import java.util.*;
 import java.io.*;
 
-class Phollandrho_Random1{
+class Phollardrho_Random2{
     static BigInteger TWO = new BigInteger("2");    
     static BigInteger ONE = BigInteger.ONE;
     static BigInteger ZERO = BigInteger.ZERO;
@@ -19,15 +19,20 @@ class Phollandrho_Random1{
     private static BigInteger rho(BigInteger N, Deadline deadline) {
         BigInteger x1 = TWO;
         BigInteger x2 = TWO;
+        while(x1.equals(x2)){                               //x1 and x2 cant be the same
+            x1 = new BigInteger(N.bitLength(),random);
+            x2 = new BigInteger(N.bitLength(),random);
+        }
         BigInteger divisor= ONE;
-        BigInteger c  = new BigInteger(N.bitLength(),random);           
-     
+        BigInteger c  = ONE;                                // In the original algorithm, g(x)=(x^2 - 1) mod(n)
+                                                            // Nowadays it's more common to use g(x)=(x^2 + 1) mod(n)
+        
         for (BigInteger num : smallerPrimes) {
             if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
             return num;
             }
         }
-
+        
         while((divisor.equals(ONE))){
             if(deadline.timeUntil() > 1.28*Math.pow(10,9)){    //1.28 sec remaining
                 x1  = f(x1,N,c);

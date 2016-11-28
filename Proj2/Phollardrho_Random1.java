@@ -3,7 +3,7 @@ import java.math.*;
 import java.util.*;
 import java.io.*;
 
-class Phollandrho_fixed{
+class Phollardrho_Random1{
     static BigInteger TWO = new BigInteger("2");    
     static BigInteger ONE = BigInteger.ONE;
     static BigInteger ZERO = BigInteger.ZERO;
@@ -20,20 +20,21 @@ class Phollandrho_fixed{
         BigInteger x1 = TWO;
         BigInteger x2 = TWO;
         BigInteger divisor= ONE;
-        BigInteger c  = ONE;                               
-        
+        BigInteger c  = new BigInteger(N.bitLength(),random);           
+     
         for (BigInteger num : smallerPrimes) {
             if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
             return num;
             }
         }
-        
+
         while((divisor.equals(ONE))){
             if(deadline.timeUntil() > 1.28*Math.pow(10,9)){    //1.28 sec remaining
                 x1  = f(x1,N,c);
                 x2 = f(f(x2,N,c),N,c);
                 divisor = x1.subtract(x2).gcd(N);
             }else{
+                cant_prime = true;
                 return null;
             }
                 
@@ -64,7 +65,6 @@ class Phollandrho_fixed{
         BigInteger divisor = rho(N, deadline);
         if(divisor == null){
             System.out.println("fail");
-            cant_prime = true;
             return;
         }else if(divisor.equals(BigInteger.ONE)){
             return;

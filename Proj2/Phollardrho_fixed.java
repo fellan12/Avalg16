@@ -3,17 +3,18 @@ import java.math.*;
 import java.util.*;
 import java.io.*;
 
-class Phollardrho_fixed{
-    private static BigInteger TWO = new BigInteger("2");    
-    private static BigInteger ONE = BigInteger.ONE;
-    private static BigInteger ZERO = BigInteger.ZERO;
-    private static BigInteger[] smallerPrimes = new BigInteger[]{
-      TWO, new BigInteger("3"), new BigInteger("5"), new BigInteger("7")
-    };
-
-    private static ArrayList<BigInteger> primes = new ArrayList<BigInteger>(); 
-    private static boolean cant_prime = false;
-    private static BigInteger origin = BigInteger.ONE;
+class Phollandrho_fixed{
+    static BigInteger TWO = new BigInteger("2");    
+    static BigInteger ONE = BigInteger.ONE;
+    static BigInteger ZERO = BigInteger.ZERO;
+    static BigInteger[] smallerPrimes = new BigInteger[]{
+        TWO,
+        new BigInteger("3"),
+        new BigInteger("5"),
+        new BigInteger("7")};
+    static Random random = new Random();
+    static ArrayList<BigInteger> primes = new ArrayList<BigInteger>(); 
+    static boolean cant_prime = false;
     
     private static BigInteger rho(BigInteger N, Deadline deadline) {
         BigInteger x1 = TWO;
@@ -21,12 +22,14 @@ class Phollardrho_fixed{
         BigInteger divisor= ONE;
         BigInteger c  = ONE;                               
         
+        
         for (BigInteger num : smallerPrimes) {
             if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
-               return num;
-           }
+            return num;
+            }
         }
-      
+        
+       
 
         while((divisor.equals(ONE))){
             if(deadline.timeUntil() > 1.28*Math.pow(10,9)){    //1.28 sec remaining
@@ -35,11 +38,11 @@ class Phollardrho_fixed{
                 divisor = x1.subtract(x2).gcd(N);
             }else{
                 return null;
-            }       
+            }
+                
         }
 
         if(!divisor.isProbablePrime(1)){
-            System.err.println("Fail in rho" + divisor);
             return null;
         }
         return divisor;
@@ -74,17 +77,6 @@ class Phollardrho_fixed{
         }
     }
 
-    public static void controll(){
-        BigInteger sum = BigInteger.ONE;
-        for(BigInteger i : primes){
-            sum = sum.add(i);
-        }   
-        if(sum.equals(origin)){
-            System.out.println("Right!!!!!!!!!!!!!!!!!!");
-        }
-    }
-
-
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
 
@@ -93,7 +85,6 @@ class Phollardrho_fixed{
             Deadline deadline = new Deadline(15000000000L);     //15sec deadline
             try{
                 BigInteger N = scan.nextBigInteger();
-                origin = N;
                 factor(N, deadline);
                 if(!cant_prime){
                     for(BigInteger i : primes){

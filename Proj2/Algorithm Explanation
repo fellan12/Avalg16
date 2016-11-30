@@ -1,0 +1,69 @@
+Phollandrho_fixed + check
+Har fasta värden i rho-funktionen:
+	x1 = 2
+	x2 = 2
+	c = 1
+
+Denna version ger ett ungefärligt värdet av 57 på kattis
+https://kth.kattis.com/submissions/1542584
+
+
+Phollandrho_Random1 + check
+Har fast värde på x1 och x2, men random värde på c i rho-funktionen:
+	x1 = 2
+	x2 = 2
+	c = random
+
+Denna version ger ett ungefärligt värde av 51 på kattis
+https://kth.kattis.com/submissions/1542589
+
+
+Phollandrho_Random2 + check
+Har fast värde på c, men random på x1 och x2 i rho-funktionen
+	x1 = random
+	x2 = random
+	c = 1
+
+Denna version ger ett ungefärligt värde av 5 på kattis
+https://kth.kattis.com/submissions/1542591
+
+
+Trial Division
+Denna version ger ett ungefärligt värde av 1 på kattis
+https://kth.kattis.com/submissions/1542603
+
+
+Som det ser ut så verkar fixed-versionen fungera bäst. Det kommer nog också att ha en relativ fast tid
+att köra. Det kan nog vara för att man inte har någon randomness.
+
+Random1-versionen ger ett bra värdet, men det kan variera lite beroende på vilket värde
+c får. Om c får ett dåligt värde så kan det hända att rho-funktionen tar längre tid. 
+Men i average så fungerar den bra.
+
+Random2-versionen fungerar inte alls. Det är förmodligen för att både x1 och x2 får random värden 
+och de värdena kan vara jätte olika och gör att rho-funktionen måste jobba mer. 
+
+Tänkte göra en Random3-version där alla värden är random, men efter Random2's dåliga resultat 
+skrotades den ideen.
+
+Benchmark
+Nanem				Score	KattisID
+-------------------------------------
+Trial				1		1542603
+-------------------------------------
+Trial w\ check  	3		1548334
+-------------------------------------
+Fixed 				53		1542617
+-------------------------------------
+Fixed w\ check		57		1542584
+-------------------------------------
+Random1 			50		1542636	
+-------------------------------------
+Random1 w\ check 	51		1542589
+-------------------------------------
+Random2 			1		1542637
+-------------------------------------
+Random2 w\ check	5		1542591
+-------------------------------------
+
+check - Check for smaller primes optimization

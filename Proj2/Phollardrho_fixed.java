@@ -21,11 +21,11 @@ class Phollardrho_fixed{
         BigInteger divisor= ONE;
         BigInteger c  = ONE;                               
         
-        for (BigInteger num : smallerPrimes) {
+/*        for (BigInteger num : smallerPrimes) {
             if (N.mod(num).equals(ZERO)){                       //Get out the smaller primes
                return num;
            }
-        }
+        }*/
       
 
         while((divisor.equals(ONE))){

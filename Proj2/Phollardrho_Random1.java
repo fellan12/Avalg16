@@ -3,7 +3,7 @@ import java.math.*;
 import java.util.*;
 import java.io.*;
 
-class Phollandrho_Random1{
+class Phollardrho_Random1{
     static BigInteger TWO = new BigInteger("2");    
     static BigInteger ONE = BigInteger.ONE;
     static BigInteger ZERO = BigInteger.ZERO;

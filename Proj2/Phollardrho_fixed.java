@@ -3,7 +3,7 @@ import java.math.*;
 import java.util.*;
 import java.io.*;
 
-class Phollandrho_fixed{
+class Phollardrho_fixed{
     static BigInteger TWO = new BigInteger("2");    
     static BigInteger ONE = BigInteger.ONE;
     static BigInteger ZERO = BigInteger.ZERO;
